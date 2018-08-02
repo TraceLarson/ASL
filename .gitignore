@@ -1,0 +1,15 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+var
+
+# Dependency directories
+node_modules
+vendor
+
+# dotenv environment variable files
+.env
+
+# MacOS
+.DS_Store
