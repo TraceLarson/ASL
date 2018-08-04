@@ -7,7 +7,7 @@ const fs = require('fs');
 let userDataPath = path.join(__dirname, '/../data/users.json');
 
 let getUsers = (req, res, next) => {
-    fs.readFile(UserDataPath, (err, data) => {
+    fs.readFile(userDataPath, (err, data) => {
         req.users = JSON.parse(data);
         next()
     })
@@ -19,10 +19,12 @@ let saveUsers = (users) => {
 }
 
 router.get('/list', getUsers, (req, res, next) => {
+    console.log(req.users);
     res.json(req.users)
 })
 
 router.post('/', getUsers, (req, res, next) =>{
+    console.log(req.body);
     req.users[req.body.username] = req.body;
     saveUsers(req.users);
     res.redirect('/');
