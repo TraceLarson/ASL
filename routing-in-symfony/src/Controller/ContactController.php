@@ -8,12 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ContactController extends Controller
 {
     /**
-     * @Route("/contact", name="contact")
+     * @Route("/Contact", name="contact")
      */
     public function index()
     {
         return $this->render('contact/index.html.twig', [
             'controller_name' => 'ContactController',
+	        'page_name' => 'contact',
+
         ]);
     }
 }
