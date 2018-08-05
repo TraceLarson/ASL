@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomeController extends Controller
 {
+	#alias for routing
     /**
      * @Route("/", name="home")
      */

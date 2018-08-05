@@ -7,7 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ThankYouController extends Controller
 {
-    /**
+	#alias for routing
+	/**
      * @Route("/Thank-you", name="thank_you")
      */
     public function index()
