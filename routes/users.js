@@ -6,7 +6,7 @@ const fs = require('fs');
 
 let userDataPath = path.join(__dirname, '/../data/users.json');
 
-let getUsers = (res, req, next) => {
+let getUsers = (req, res, next) => {
     fs.readFile(userDataPath, (err, data) => {
         req.users = JSON.parse(data);
         next();
