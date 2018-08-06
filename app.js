@@ -19,6 +19,7 @@ nunjucks.configure('views' ,{
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+
 // Express Validator Middleware
 app.use(expressValidator({
     errorFormatter: function (param, msg, value) {
@@ -37,7 +38,7 @@ app.use(expressValidator({
     }
 }));
 
-
+// Routes
 const index = require('./routes/Index');
 const listing = require('./routes/Listing');
 const create = require('./routes/Create');
@@ -47,8 +48,6 @@ app.use('/Listing', listing);
 app.use('/Create', create);
 app.use('/Detail', detail);
 
-//TODO: Remove users
-const users = require('./routes/users');
-app.use('/users', users);
+
 
 module.exports = app;

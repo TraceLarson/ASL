@@ -1,12 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const path = require('path');
-const fs = require('fs');
+const express          = require('express');
+const router           = express.Router();
+const path             = require('path');
+const fs               = require('fs');
 const expressValidator = require('express-validator');
 
 
 // Path to notes data
 let notesDataPath = path.join(__dirname, '/../data/notes.json');
+
 
 // Method to get notes
 let getNotes = (req, res, next) =>{
@@ -15,6 +16,7 @@ let getNotes = (req, res, next) =>{
         next();
     })
 }
+
 
 // UPDATE the notes.json
 let saveNote = (notes) => {
@@ -30,6 +32,7 @@ router.get('/', (req, res, next) => {
     });
 })
 
+
 // POST request to create a note
 router.post('/add', getNotes,(req, res, next) => {
     req.checkBody('title', 'A title is required').notEmpty();
@@ -40,15 +43,12 @@ router.post('/add', getNotes,(req, res, next) => {
     var errors = req.validationErrors();
 
     if(errors){
-        console.log('ERRORS');
         res.render(path.join(__dirname, '/../views/create'),{
             page_name : 'Create',
             errors : errors
         });
     } else {
-        console.log('Success');
         req.notes[req.body.title] = req.body;
-        console.log(req.notes[req.body.title]);
         saveNote(req.notes);
         res.redirect('/Create');
     }
