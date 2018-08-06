@@ -5,13 +5,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item active">
+            <li class="nav-item {% if page_name == 'Home' %}active {% endif %}">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if page_name == 'Listing' %}active {% endif %}">
                 <a class="nav-link" href="/Listing">Listing</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if page_name == 'Create' %}active {% endif %}">
                 <a class="nav-link" href="/Create">Create-A-Note</a>
             </li>
         </ul>

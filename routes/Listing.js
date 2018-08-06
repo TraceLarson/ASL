@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const path = require('path');
 const fs = require('fs');
 
@@ -9,13 +10,23 @@ let notesDataPath = path.join(__dirname, '/../data/notes.json');
 let getNotes = (req, res, next) =>{
     fs.readFile(notesDataPath, (err, data) => {
         req.notes = JSON.parse(data);
+        next();
     })
 }
 
 // load listing page
-router.get('/',/* getNotes,*/ (req, res, next) => {
-    res.render(path.join(__dirname, '/../views/listing.njk'));
+router.get('/', getNotes, (req, res, next)=> {
+
+    res.render(path.join(__dirname, '/../views/listing'), {
+        notes: req.notes,
+        page_name: 'Listing'
+    });
 })
 
+// GET request for the notes list
+router.get('/list', getNotes, (req, res, next) =>{
+    console.log(req.notes[req.body.title]);
+    res.json(req.notes);
+})
 
 module.exports = router;

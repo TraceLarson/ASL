@@ -2,9 +2,13 @@ const express        = require('express');
 const nunjucks       = require('nunjucks');
 const app            = express();
 const bodyParser     = require('body-parser');
+const path           = require('path');
+
 
 
 // Nunjucsks configuration
+app.set('view engine', 'njk');
+app.set('views', path.join(__dirname, '/../views'));
 nunjucks.configure('views' ,{
     autoescape: true,
     express: app
