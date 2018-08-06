@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs');
+const expressValidator = require('express-validator');
 
 
 // Path to notes data
@@ -31,10 +32,27 @@ router.get('/', (req, res, next) => {
 
 // POST request to create a note
 router.post('/add', getNotes,(req, res, next) => {
-    req.notes[req.body.title] = req.body;
-    console.log(req.notes[req.body.title]);
-    saveNote(req.notes);
-    res.redirect('/Create');
+    req.checkBody('title', 'A title is required').notEmpty();
+    req.checkBody('date', 'A date is required').notEmpty();
+    req.checkBody('summary', 'A summary is required').notEmpty();
+    req.checkBody('fulltext', 'The text of the note is required').notEmpty();
+
+    var errors = req.validationErrors();
+
+    if(errors){
+        console.log('ERRORS');
+        res.render(path.join(__dirname, '/../views/create'),{
+            page_name : 'Create',
+            errors : errors
+        });
+    } else {
+        console.log('Success');
+        req.notes[req.body.title] = req.body;
+        console.log(req.notes[req.body.title]);
+        saveNote(req.notes);
+        res.redirect('/Create');
+    }
+
 })
 
 

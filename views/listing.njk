@@ -7,32 +7,17 @@
     <div class="container" id="notes">
         <ol>
             {% for note, info in notes %}
-            <ul class="list-group mb-3">
-                    <li class="list-group-item">{{ info.title }} </li>
-                    <li class="list-group-item">{{ info.date }} </li>
-                    <li class="list-group-item">{{ info.summary }} </li>
-                    <li class="list-group-item">{{ info.fulltext }} </li>
-            </ul>
+                <li>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item">{{ info.title }} </li>
+                        <li class="list-group-item">{{ info.summary }} </li>
+                        <li class="list-group-item"><a class="btn btn-primary btn-sm" href="/Detail/{{ info.title }}">Details</a>
+                        </li>
+                    </ul>
+                </li>
             {% else %}
                 <li class="list-group-item"><strong>This is where the notes would go...</strong></li>
             {% endfor %}
         </ol>
     </div>
 {% endblock %}
-
-<script>
-    // var notes ={};
-    // GET all notes from the server
-    $.ajax({
-        url: '/',
-        method: 'GET'
-    }).done(function (notesList) {
-        console.log(notesList);
-        // add each note to the list
-        notes = notesList;
-        var list = $('#notes');
-        for (title in notes) {
-            list.append('<div class="list-group-item"><strong class="title">' + notes[title].title + '</strong>:  ' + notes[title].date + '  ' + notes[title].summary + '<a class="badge delete-btn">Delete</a><a class="badge bg-primary edit-btn">Edit</a></div>')
-        }
-    })
-</script>

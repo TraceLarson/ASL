@@ -2,7 +2,13 @@
 
 {% block title %}Note Detail{% endblock %}
 
-
 {% block body %}
-    <h2>Detail</h2>
+    <div class="container">
+        <h2>{{ detail.title }}</h2>
+        <ul class="list-group mb-3">
+            <li class="list-group-item">{{ detail.date }}</li>
+            <li class="list-group-item">{{ detail.fulltext }}</li>
+        </ul>
+    </div>
+
 {% endblock %}
