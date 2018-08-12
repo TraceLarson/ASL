@@ -14,4 +14,11 @@ db.on('error', console.error.bind(console,'MongoDB connection error'));
 // Bind connection to connection event
 db.once('open', ()=> console.log('DATABASE CONNECTED SUCCESSFULLY'));
 
+
+// Routes
+const index = require('./routes/index');
+app.use('/', index);
+
+
+
 module.exports = app;
