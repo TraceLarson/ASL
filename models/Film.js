@@ -1,12 +1,11 @@
 var mongoose = require('mongoose');
 
 
-var filmSchema = mongoose.Schema({
-
+var filmSchema = new mongoose.Schema({
     // set Film document structure
-    name: { type: String, required: true },
-    // releaseDate: { type: Date, required: false },
-    // studio: { type: String, required: false, unique: false },
+    name: String,
+    releaseDate: Date,
+    studio: String,
     rating: { type: String, enum: [
             'G',
             'PG',
@@ -14,13 +13,13 @@ var filmSchema = mongoose.Schema({
             'R',
             'NR',
         ] },
-    // length: { type: String },
+    length: { type: String },
     // Array of people in the film
     people: [{type: mongoose.Schema.Types.ObjectId, ref: 'People'}],
-    meta: {
-
-    },
-    created_at: Date,
+    // meta: {
+    //
+    // },
+    created_at: { type: Date, default: Date.now},
     updated_at: Date
 });
 

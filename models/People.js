@@ -1,11 +1,10 @@
 var mongoose = require('mongoose');
 
 
-var peopleSchema = mongoose.Schema({
-
+var peopleSchema = new mongoose.Schema({
     // set People document structure
-    name: {type: String, required: true, unique: true},
-    character: {type: String, required: true, unique: true},
+    name: {type: String, required: true},
+    character: {type: String, required: true},
     role: {type: String, enum: [
             'Cast',
             'Director',

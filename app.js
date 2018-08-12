@@ -7,6 +7,11 @@ const path = require('path');
 const expressValidator = require('express-validator');
 
 
+
+// Set static files
+app.use(express.static('public'));
+
+
 // Nunjucks configuration
 app.set('view engine', 'njk');
 app.set('view', path.join(__dirname, '/../views'));
@@ -15,9 +20,11 @@ nunjucks.configure('views', {
     express: app
 })
 
+
 // Configure body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
 
 // Express Validator Middleware
 app.use(expressValidator({
@@ -37,6 +44,7 @@ app.use(expressValidator({
     }
 }));
 
+
 // Connect to mongodb database
 mongoose.connect('mongodb://' + process.env.MONGO_HOST + '/' + process.env.MONGO_DATABASE);
 
@@ -52,7 +60,11 @@ db.once('open', ()=> console.log('DATABASE CONNECTED SUCCESSFULLY'));
 
 // Routes
 const index = require('./routes/index');
+const films = require('./routes/films');
+const people = require('./routes/people');
 app.use('/', index);
+app.use('/films', films);
+app.use('/people', people);
 
 
 

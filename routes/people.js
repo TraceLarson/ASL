@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 const Film = require('../models/Film');
 const Person = require('../models/People');
 const nunjucks = require('nunjucks');
@@ -7,10 +8,15 @@ const validator = require('express-validator');
 
 
 
-// Create a new person
-router.post('/people', (req, res, next) => {
-    res.send('<h1>create new person</h1>');
+// Load Create a new person page
+router.get('/', (req, res, next) => {
+    res.render(path.join(__dirname, '/../views/people/create'),{
+        page_name: 'People'
+    })
 })
+
+// Create a new person
+// TODO: Create person router
 
 // Update a person
 router.post('/people/:id', (req, res, next) => {
