@@ -13,7 +13,6 @@ router.get('/', (req, res, next) => {
         if (err) {
             console.log('error finding films ', err);
         }
-        ;
 
         console.log(films);
         res.render(path.join(__dirname, '/../views/films/films'), {
@@ -26,14 +25,15 @@ router.get('/', (req, res, next) => {
 
 // Get one film from the databse with all the people in that film
 router.get('/:id', (req, res, next) => {
-    res.render(path.join(__dirname, '/../views/films/films'),{
-        page_name: 'Films'
-    });
+    res.send(req.params);
+    // res.render(path.join(__dirname, '/../views/films/films'),{
+    //     page_name: 'Films'
+    // });
 })
 
 // Load Create page
-router.get('/films/create', (req, res, next) => {
-    res.render(path.join(__dirname, '/../views/films/create'),{
+router.get('/films/createFilm', (req, res, next) => {
+    res.render(path.join(__dirname, '/../views/films/createFilm'),{
         page_name: 'Films'
     });
 })

@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.set('view engine', 'njk');
 app.set('view', path.join(__dirname, '/../views'));
 nunjucks.configure('views', {
-    autoescape: true,
+    // autoescape: true,
     express: app
 })
 

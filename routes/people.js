@@ -19,8 +19,8 @@ router.get('/', (req, res, next) => {
 // TODO: Create person router
 
 // Update a person
-router.post('/people/:id', (req, res, next) => {
-    res.send('<h1>Update person by id</h1>')
+router.get('/:id', (req, res, next) => {
+    res.send(req.params)
 })
 
 // Delete a person
