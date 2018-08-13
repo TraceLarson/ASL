@@ -1,6 +1,11 @@
 {% extends "../base.njk" %}
 
 {% block body %}
+    {% if people %}
+        {% for person in people %}
+            {{ person }}
+        {% endfor %}
+    {% endif %}
     <div class="container">
     {% if errors %}
         <ul class="list-group">
@@ -10,7 +15,7 @@
             {% endfor %}
         </ul>
     {% endif %}
-    <form action="/Create/add" method="POST">
+    <form action="/people" method="POST">
         {#Name Input#}
         <div class="form-group">
             <label for="name">Name</label>
@@ -20,7 +25,7 @@
         {#Character Input#}
         <div class="form-group">
             <label for="character">Character</label>
-            <input type="text" class="form-control" name="character" id="character" placeholder="Character Name">
+            <input type="text" class="form-control" name="character" id="character" placeholder="Character Name...">
         </div>
         {#Role Input#}
         <div class="form-group">
@@ -32,6 +37,11 @@
                 <option value="Producer">Producer</option>
                 <option value="Other">Other</option>
             </select>
+        </div>
+        {#film Input#}
+        <div class="form-group">
+            <label for="film">Film</label>
+            <input type="text" class="form-control" name="film" id="film" placeholder="Film name">
         </div>
         {#Submit Button#}
         <button type="submit" class="btn btn-primary">Submit</button>

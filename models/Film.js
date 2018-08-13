@@ -13,7 +13,7 @@ var filmSchema = new mongoose.Schema({
             'R',
             'NR',
         ] },
-    length: { type: String },
+    length: String ,
     // Array of people in the film
     people: [{type: mongoose.Schema.Types.ObjectId, ref: 'People'}],
     // meta: {

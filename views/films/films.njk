@@ -1,9 +1,29 @@
 {% extends "../base.njk" %}
 
 {% block body %}
-    <a class="btn btn-primary" href="/films/films/createFilm">Create New Film</a>
+    <a class="btn btn-primary" href="/films/create">Create New Film</a>
     <br>
-    {{ films }}
+    <ol>
+        {% for film in films %}
+            <li>
+                <ul>
+                    <li>{{ film.id }}</li>
+                    <li>{{ film.name }}</li>
+                    <li>{{ film.studio }}</li>
+                    <li>{{ film.releaseDate }}</li>
+                    <li>{{ film.rating }}</li>
+                    <li>{{ film.length }}</li>
+                    <li>
+                        <ul>
+                            {% for person in film.people %}
+                                <li>{{ person.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        {% endfor %}
+    </ol>
 {% endblock %}
 
 

@@ -13,14 +13,19 @@ router.get('/', (req, res, next) => {
         if (err) {
             console.log('error finding films ', err);
         }
-
-        console.log(films);
+        // console.log(films);
         res.render(path.join(__dirname, '/../views/films/films'), {
             page_name: 'Films',
             films: films
         });
     })
+})
 
+// Load Create page
+router.get('/create', (req, res, next) => {
+    res.render(path.join(__dirname, '/../views/films/create'),{
+        page_name: 'Films'
+    });
 })
 
 // Get one film from the databse with all the people in that film
@@ -31,28 +36,21 @@ router.get('/:id', (req, res, next) => {
     // });
 })
 
-// Load Create page
-router.get('/films/createFilm', (req, res, next) => {
-    res.render(path.join(__dirname, '/../views/films/createFilm'),{
-        page_name: 'Films'
-    });
-})
-
 // Post request to create a new film
-router.post('/films', (req, res, next) => {
+router.post('/', (req, res, next) => {
     var newFilm = Film({
-        name: 'xmen2',
-        releaseDate: '2018-8-11',
-        studio: 'Fox',
-        rating: 'PG13',
-        length: '132',
+        name: req.body.name,
+        releaseDate: req.body.releaseDate,
+        studio: req.body.studio,
+        rating: req.body.rating,
+        length: req.body.length,
     });
 
-    newFilm.save(err => {
+    newFilm.save((err, film) => {
         if (err) throw err;
-
         console.log('User Created');
-        res.redirect('/films/films');
+        // res.send(film);
+        res.redirect('/films');
     })
 })
 

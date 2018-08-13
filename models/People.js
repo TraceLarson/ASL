@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 
 var peopleSchema = new mongoose.Schema({
     // set People document structure
-    name: {type: String, required: true},
-    character: {type: String, required: true},
+    name: String,
+    character: String,
     role: {type: String, enum: [
             'Cast',
             'Director',
@@ -14,10 +14,10 @@ var peopleSchema = new mongoose.Schema({
         ]},
     // The film the person belongs to
     film: {type: mongoose.Schema.Types.ObjectId, ref: 'Film'} ,
-    meta: {
-        dob: Date,
-        location: {type: String, default: 'us'}
-    },
+    // meta: {
+    //     dob: Date,
+    //     location: {type: String, default: 'us'}
+    // },
     created_at: Date,
     updated_at: Date
 });
