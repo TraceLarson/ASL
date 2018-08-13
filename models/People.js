@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 
 var peopleSchema = new mongoose.Schema({
     // set People document structure
+    // id: mongoose.Schema.Types.ObjectId,
     name: String,
     character: String,
     role: {type: String, enum: [
@@ -41,4 +42,4 @@ peopleSchema.pre('save' , function(next) {
 })
 
 
-module.exports = mongoose.model('People', peopleSchema);
+module.exports = mongoose.model('People', peopleSchema, 'peoples');

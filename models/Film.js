@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 
 var filmSchema = new mongoose.Schema({
     // set Film document structure
+    // id: mongoose.Schema.Types.ObjectId,
     name: String,
     releaseDate: Date,
     studio: String,
@@ -14,7 +15,6 @@ var filmSchema = new mongoose.Schema({
             'NR',
         ] },
     length: String ,
-    // Array of people in the film
     people: [{type: mongoose.Schema.Types.ObjectId, ref: 'People'}],
     // meta: {
     //
@@ -41,4 +41,4 @@ filmSchema.pre('save', function(next) {
 
 })
 
-module.exports = mongoose.model('Film', filmSchema);
+module.exports = mongoose.model('Film', filmSchema, 'films');

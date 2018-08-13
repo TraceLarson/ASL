@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
         if (err) {
             console.log('error finding people ', err);
         }
-        // console.log(people);
+        console.log(people);
         res.render(path.join(__dirname, '/../views/people/create'), {
             page_name: 'People',
             people: people
@@ -31,37 +31,34 @@ router.get('/', (req, res, next) => {
 
 // Post request to create a new Person
 router.post('/', (req, res, next) => {
-    var newPerson = People({
-        name: req.body.name,
-        character: req.body.character,
-        role: req.body.role,
-        film: req.body.film,
-    });
-    newPerson.validate(err => {
-        if(err) console.log('newPerson validate err', err);
+    Film.findOne({name: req.body.film}, (err, film) => {
+        console.log('find film name: ' + film.name);
+        console.log('Film id: ' + film.id);
+        var newPerson = People({
+            name: req.body.name,
+            character: req.body.character,
+            role: req.body.role,
+            film: film.id,
+        });
+        newPerson.validate(err => {
+            if (err) console.log('newPerson validate err', err);
+        });
+        newPerson.save((err, person) => {
+            if (err) console.log('error saving Person document', err);
+            console.log('Person Created: ' + person);
+            console.log('film id: ' + newPerson.film);
+
+
+        });
+
+        film.people.push(newPerson.id);
+        film.save(err => {
+            if(err) console.log('Error saving film');
+        })
+        res.redirect('/people');
     });
 
-    newPerson.save((err, person) => {
-        if (err) throw err;
-        console.log('Person Created');
-        console.log('film id: ' + req.body.film);
-        Film.findOne({_id: req.body.film}, (err, film)=>{
-            if(err) console.log('find film error');
-            film.people.push(req.body.film);
-            film.save((err, film)=>{
-                if(err) console.log('error saving film');
-                res.redirect('/films');
-            })
-        })
-            // .populate('people')
-            // .exec(function (err, film) {
-            //     if (err) console.log('film query err ', err);
-            //     console.log('the films are' + film);
-            //     film.save((err)=>{
-            //         res.redirect('/films');
-            //     })
-            // });
-    })
+
 
 
 });

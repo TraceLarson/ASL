@@ -9,16 +9,26 @@ const validator = require('express-validator');
 
 // Get all the films from the database
 router.get('/', (req, res, next) => {
-    Film.find({}, function (err, films) {
-        if (err) {
-            console.log('error finding films ', err);
-        }
-        // console.log(films);
+    Film.find().populate('people').exec((err, films) => {
+        if(err) console.log('Error finding films ', err);
+        console.log(films[0]);
         res.render(path.join(__dirname, '/../views/films/films'), {
             page_name: 'Films',
             films: films
-        });
+        })
     })
+
+    // Film.find().populate('people').exec( (err, films) => {
+    //     if (err) {
+    //         console.log('error finding films ', err);
+    //     }else{
+    //         console.log(films);
+    //         res.render(path.join(__dirname, '/../views/films/films'), {
+    //             page_name: 'Films',
+    //             films: films
+    //         });
+    //     }
+    // })
 })
 
 // Load Create page
@@ -47,8 +57,8 @@ router.post('/', (req, res, next) => {
     });
 
     newFilm.save((err, film) => {
-        if (err) throw err;
-        console.log('User Created');
+        if (err) console.log('Error creating Film document', err);
+        console.log('Film Created');
         // res.send(film);
         res.redirect('/films');
     })
