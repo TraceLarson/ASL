@@ -17,18 +17,6 @@ router.get('/', (req, res, next) => {
             films: films
         })
     })
-
-    // Film.find().populate('people').exec( (err, films) => {
-    //     if (err) {
-    //         console.log('error finding films ', err);
-    //     }else{
-    //         console.log(films);
-    //         res.render(path.join(__dirname, '/../views/films/films'), {
-    //             page_name: 'Films',
-    //             films: films
-    //         });
-    //     }
-    // })
 })
 
 // Load Create page
@@ -40,11 +28,11 @@ router.get('/create', (req, res, next) => {
 
 // Get one film from the databse with all the people in that film
 router.get('/:id', (req, res, next) => {
-    res.send(req.params);
-    // res.render(path.join(__dirname, '/../views/films/films'),{
-    //     page_name: 'Films'
-    // });
-})
+    Film.findOne( { _id: req.params.id } ).populate('people').exec((err, film) => {
+        if (err) console.log('Error finding by id', err);
+        res.send(film.people);
+    });
+});
 
 // Post request to create a new film
 router.post('/', (req, res, next) => {
