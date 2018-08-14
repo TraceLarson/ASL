@@ -6,7 +6,7 @@
     <ol class="list-group">
         {% for film in films %}
             <li class="list-group-item">
-                <ul class="list-group">
+                <ul class="list-group ">
                     <li class="d-none" id="film-id">{{ film.id }}</li>
                     <li class="list-group-item">Title: {{ film.name }}</li>
                     <li class="list-group-item">Studio: {{ film.studio }}</li>
@@ -15,10 +15,10 @@
                     <li class="list-group-item">Film Length: {{ film.length }}</li>
                     <button class="btn btn-success" id="view-cast">View Cast</button>
                     <li class="list-group-item">
-                        <ul class="list-group">
-                            {% for person in film.people %}
-                                <li class="list-group-item">Actor: {{ person.name }} : Character: {{ person.character }}</li>
-                            {% endfor %}
+                        <ul class="list-group actor-info-{{ film.id }}">
+                            {#{% for person in film.people %}#}
+                                {#<li class="list-group-item">Actor: {{ person.name }} : Character: {{ person.character }}</li>#}
+                            {#{% endfor %}#}
                         </ul>
                     </li>
                 </ul>

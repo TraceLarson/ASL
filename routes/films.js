@@ -30,7 +30,7 @@ router.get('/create', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
     Film.findOne( { _id: req.params.id } ).populate('people').exec((err, film) => {
         if (err) console.log('Error finding by id', err);
-        res.send(film.people);
+        res.json(film.people);
     });
 });
 
