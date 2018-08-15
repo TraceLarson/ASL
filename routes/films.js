@@ -36,20 +36,46 @@ router.get('/:id', (req, res, next) => {
 
 // Post request to create a new film
 router.post('/', (req, res, next) => {
-    var newFilm = Film({
-        name: req.body.name,
-        releaseDate: req.body.releaseDate,
-        studio: req.body.studio,
-        rating: req.body.rating,
-        length: req.body.length,
-    });
+    req.checkBody('name', 'A film name is required').notEmpty();
+    req.checkBody('studio', 'A studio name is required').notEmpty();
+    req.checkBody('releaseDate', 'A release date is required').notEmpty();
+    req.checkBody('rating', 'A rating is required').notEmpty();
+    req.checkBody('length', 'A length is required').notEmpty();
 
-    newFilm.save((err, film) => {
-        if (err) console.log('Error creating Film document', err);
-        console.log('Film Created');
-        // res.send(film);
-        res.redirect('/films');
-    })
+    var errors = req.validationErrors();
+
+    if(errors){
+        res.render(path.join(__dirname, '/../views/films/create'),{
+            page_name : 'Films',
+            errors : errors
+        });
+    } else {
+        var newFilm = Film({
+            name: req.body.name,
+            releaseDate: req.body.releaseDate,
+            studio: req.body.studio,
+            rating: req.body.rating,
+            length: req.body.length,
+        });
+
+        newFilm.save((err, film) => {
+            if (err) {
+                console.log('Error creating Film document', err);
+                res.render(path.join(__dirname, '/../views/films/create'),{
+                    page_name : 'Films',
+                    mongoErrors : err,
+
+                });
+            }else{
+                console.log('Film Created');
+                res.redirect('/films');
+            }
+
+
+        })
+    }
+
+
 })
 
 

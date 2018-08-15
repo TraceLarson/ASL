@@ -31,36 +31,63 @@ router.get('/', (req, res, next) => {
 
 // Post request to create a new Person
 router.post('/', (req, res, next) => {
-    Film.findOne({name: req.body.film}, (err, film) => {
-        console.log('find film name: ' + film.name);
-        console.log('Film id: ' + film.id);
-        var newPerson = People({
-            name: req.body.name,
-            character: req.body.character,
-            role: req.body.role,
-            film: film.id,
+    req.checkBody('name', 'A name is required').notEmpty();
+    req.checkBody('character', 'A character name is required').notEmpty();
+    req.checkBody('role', 'A role is required').notEmpty();
+    req.checkBody('film', 'A film is required').notEmpty();
+
+    var errors = req.validationErrors();
+
+    if(errors){
+        res.render(path.join(__dirname, '/../views/people/create'),{
+            page_name : 'People',
+            errors : errors
         });
-        newPerson.validate(err => {
-            if (err) console.log('newPerson validate err', err);
+    } else {
+        Film.findOne({name: req.body.film}, (err, film) => {
+            var newPerson = People({
+                name: req.body.name,
+                character: req.body.character,
+                role: req.body.role,
+                film: film.id,
+            });
+            newPerson.validate(err => {
+                if (err){
+                    console.log('newPerson validate err', err);
+                    res.render(path.join(__dirname, '/../views/people/create'),{
+                        page_name : 'People',
+                        errors : err
+                    });
+                }
+            });
+            newPerson.save((err, person) => {
+                if (err){
+                    console.log('error saving Person document', err);
+                    res.render(path.join(__dirname, '/../views/people/create'),{
+                        page_name : 'People',
+                        errors : err
+                    });
+                }
+                console.log('Person Created: ' + person);
+                console.log('film id: ' + newPerson.film);
+
+            });
+
+            film.people.push(newPerson.id);
+            film.save(err => {
+                if(err){
+                    console.log('Error saving film');
+                    res.render(path.join(__dirname, '/../views/people/create'),{
+                        page_name : 'People',
+                        errors : err
+                    });
+                }else{
+                    res.redirect('/people');
+                }
+            })
+
         });
-        newPerson.save((err, person) => {
-            if (err) console.log('error saving Person document', err);
-            console.log('Person Created: ' + person);
-            console.log('film id: ' + newPerson.film);
-
-
-        });
-
-        film.people.push(newPerson.id);
-        film.save(err => {
-            if(err) console.log('Error saving film');
-        })
-        res.redirect('/people');
-    });
-
-
-
-
+    }
 });
 
 // Update a People

@@ -13,12 +13,7 @@ var peopleSchema = new mongoose.Schema({
             'Producer',
             'Other',
         ]},
-    // The film the person belongs to
     film: {type: mongoose.Schema.Types.ObjectId, ref: 'Film'} ,
-    // meta: {
-    //     dob: Date,
-    //     location: {type: String, default: 'us'}
-    // },
     created_at: Date,
     updated_at: Date
 });

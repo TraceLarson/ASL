@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var filmSchema = new mongoose.Schema({
     // set Film document structure
     // id: mongoose.Schema.Types.ObjectId,
-    name: String,
+    name: {type:String, unique: true},
     releaseDate: Date,
     studio: String,
     rating: { type: String, enum: [
@@ -16,9 +16,6 @@ var filmSchema = new mongoose.Schema({
         ] },
     length: String ,
     people: [{type: mongoose.Schema.Types.ObjectId, ref: 'People'}],
-    // meta: {
-    //
-    // },
     created_at: { type: Date, default: Date.now},
     updated_at: Date
 });
