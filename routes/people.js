@@ -65,19 +65,17 @@ router.post('/', (req, res, next) => {
 
 // Update a People
 router.put('/:id', (req, res, next) => {
+    console.log(req.body);
+
     People.findOneAndUpdate(
         {_id: req.params.id},
-        {$set: {name: req.body.name}},
-        {upsert: true},
-        (err, newPerson) => {
-            if (err) {
-                console.log('error occurred')
-            } else {
-                console.log(newPerson);
-                res.send(newPerson);
-            }
+        {$set: req.body},
+        {new: true},
+        (err, people) => {
+            if (err) console.log('error occurred', err);
+            console.log(people);
+            res.send(people);
         })
-    res.redirect('/people');
 })
 
 // Delete a People
@@ -85,14 +83,13 @@ router.delete('/:id', (req, res, next) => {
     People.findOneAndRemove({
         _id: req.params.id
     }, (err, person) => {
-        if (err) {
+        if (err)
             res.send('error deleting')
-        } else {
+         else {
             console.log(person);
             res.send('deleted');
         }
     })
-    res.redirect('/people')
 })
 
 
