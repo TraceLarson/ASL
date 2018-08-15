@@ -1,0 +1,28 @@
+{
+  "name": "crud-in-node",
+  "version": "1.0.0",
+  "description": "Node JS CRUD application",
+  "main": "bin/www",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TraceLarson/ASL.git"
+  },
+  "author": "Trace Larson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TraceLarson/ASL/issues"
+  },
+  "homepage": "https://github.com/TraceLarson/ASL#readme",
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-validator": "^5.3.0",
+    "mongoose": "^5.2.7",
+    "nodemon": "^1.18.3",
+    "nunjucks": "^3.1.3"
+  }
+}

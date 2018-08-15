@@ -1,0 +1,52 @@
+{% extends "../base.njk" %}
+
+{% block body %}
+     <div class="container">
+         {% if errors %}
+              <ul class="list-group">
+                   <li class="list-group-item">ERRORS <span class="badge badge-danger badge-pill">{{ errors | length }}</span></li>
+                  {% for error in errors %}
+                       <li class="list-group-item list-group-item-danger">{{ error.msg }}</li>
+                  {% endfor %}
+              </ul>
+         {% endif %}
+          <form action="/films" method="POST">
+               {#Film Name#}
+               <div class="form-group">
+                    <label for="name">Film Name</label>
+                    <input type="text" class="form-control" id="name" name="name" aria-describedby="name"
+                           placeholder="Film Name..">
+               </div>
+               {#Studio Name#}
+               <div class="form-group">
+                    <label for="studio">Studio Name</label>
+                    <input type="text" class="form-control" id="studio" name="studio" aria-describedby="studio"
+                           placeholder="Studio Name...">
+               </div>
+               {#Release Date#}
+               <div class="form-group">
+                    <label for="releaseDate">Release Date</label>
+                    <input type="date" class="form-control" name="releaseDate" id="releaseDate">
+               </div>
+               {#Rating Picker#}
+               <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <select class="form-control" id="rating" name="rating">
+                         <option value="G">G</option>
+                         <option value="PG">PG</option>
+                         <option value="PG13">PG13</option>
+                         <option value="R">R</option>
+                         <option value="NR">NR</option>
+                    </select>
+               </div>
+               {#Length#}
+               <div class="form-group">
+                    <label for="length">Length</label>
+                    <input type="time" class="form-control" id="length" name="length" aria-describedby="length">
+               </div>
+               {#Submit Button#}
+               <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+     </div>
+{% endblock %}
+
