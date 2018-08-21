@@ -1,14 +1,19 @@
 <nav class="navbar navbar-default">
     <div id="navbar" class="collapse navbar-collapse pull-right">
         <ul class="nav navbar-nav">
+            {% if is_granted('ROLE_USER') %}
+                <li class="active"><a href="{{ path('fos_user_security_logout') }}">Stateful Logout</a></li>
+            {% else %}
+                <li class="active"><a href="{{ path('fos_user_security_login') }}">Stateful Login</a></li>
+            {% endif %}
             {% if app.request.get('_route') not in ['homepage', 'entries'] %}
                 <li><a href="{{ path("homepage") }}">Home</a></li>
             {% endif %}
             {% if app.user %}
                 <li><a href="{{ path("admin_index") }}">Admin</a></li>
-                <li><a href="{{ logout_url("secured_area") }}">Logout</a></li>
+                <li><a href="{{ logout_url("secured_area") }}">Auth0 Logout</a></li>
             {% else %}
-                <li class="active"><a href="/connect/auth0">Login</a></li>
+                <li class="active"><a href="/connect/auth0">Auth0 Login</a></li>
             {% endif %}
         </ul>
     </div>
