@@ -5,5 +5,20 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Chirp Something...</h1>
+
+        <form action="/post/create" method="post">
+            <div class="form-group">
+                <label for="id">Who's Chirping? </label>
+                <select class="form-control" name="id" id="id">
+                    {% for  user in users %}
+                        <option value="{{ user.id }}">{{ user.Username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="text">What're you Chirping? <small>(limit 200 characters)</small></label>
+                <textarea class="form-control" name="text" id="text" rows="3"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">CHIRP !</button>
+        </form>
 {% endblock %}

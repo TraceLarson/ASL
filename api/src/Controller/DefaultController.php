@@ -66,21 +66,53 @@ class DefaultController extends AbstractController
 	}
 	
 	/**
+	 * @Route("/user/list", name="get_user_list")
+	 */
+	public function getUserList() {
+		// Get rid of circular reference error
+		$encoder = new JsonEncoder();
+		$encoders = array($encoder);
+		$normalizer = new ObjectNormalizer();
+		$normalizer->setCircularReferenceLimit(1);
+		// Add Circular reference handler
+		$normalizer->setCircularReferenceHandler(function ($object) {
+			return $object->getId();
+		});
+		$normalizers = array($normalizer);
+		$serializer = new Serializer($normalizers, $encoders);
+		
+		// Get post from database and serialize them into a response object
+		$posts = $this->getDoctrine()->getRepository(Users::class)->findAll();
+		$response = new Response($serializer->serialize($posts, 'json'));
+		
+		// Return the response
+		return $response;
+	}
+	
+	/**
 	 * @Route("/post", name="create_post", methods="POST")
 	 */
 	public function createPost(Request $request) {
-		$user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(['id' => $request->request->get('user')]);
-		$post = new Post();
+		$parametersAsArray = [];
+		if ($content = $request->getContent()) {
+			$parametersAsArray = json_decode($content, true);
+		}
 		
+		$user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(['id' => $parametersAsArray['id']]);
+		$post = new Post();
+
 		$em = $this->getDoctrine()->getManager();
-		$post->setText($request->request->get('text'));
+		$post->setText($parametersAsArray['text']);
 		$post->setUsers($user);
 		$em->persist($post);
 		$em->flush();
+
+		$response = new Response(json_encode($request->request->get('text')));
+		$response->headers->set('Content-Type', 'application/json');
+		$response->headers->set('Access-Control-Allow-Origin', '*');
 		
 		
-		return new Response($request->request->get('text'));
-	
+		return new Response(var_dump($parametersAsArray['text']));
 	}
 	
 	/**
