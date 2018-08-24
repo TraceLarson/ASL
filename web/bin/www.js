@@ -5,4 +5,5 @@ const port = 3000;
 app.set('port', port);
 
 const server = http.createServer(app);
-server.listen('listening', () => console.log('Server running on port: ' + port));
+server.listen(port);
+server.on('listening', () => console.log('Server running on: ' + port));

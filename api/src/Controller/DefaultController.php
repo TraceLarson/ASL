@@ -79,7 +79,7 @@ class DefaultController extends AbstractController
 		$em->flush();
 		
 		
-		return new Response($request->query->get('text'));
+		return new Response($request->request->get('text'));
 	
 	}
 	
