@@ -6,4 +6,19 @@
 
 {% block body %}
     <h1>Create A User</h1>
+    <form action="/user" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="Username..">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="email@whereever.com">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone #</label>
+            <input type="tel" class="form-control" name="phone" id="phone" placeholder="phone number">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 {% endblock %}

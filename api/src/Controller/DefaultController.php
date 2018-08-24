@@ -115,21 +115,29 @@ class DefaultController extends AbstractController
 		return new Response(var_dump($parametersAsArray['text']));
 	}
 	
+	
 	/**
 	 * @Route("/user", name="create_user", methods="POST")
 	 */
 	public function createUser(Request $request) {
-		$user = new Users();
+		$parametersAsArray = [];
+		if ($content = $request->getContent()) {
+			$parametersAsArray = json_decode($content, true);
+		}
 		
+		
+		$user = new Users();
+
 		$em = $this->getDoctrine()->getManager();
-		$user->setUsername($request->request->get('username'));
-		$user->setEmail($request->request->get('email'));
-		$user->setPhone($request->request->get('phone'));
+		$user->setUsername($parametersAsArray['username']);
+		$user->setEmail($parametersAsArray['email']);
+		$user->setPhone($parametersAsArray['phone']);
 		$em->persist($user);
 		$em->flush();
 		
-		return new Response('Added new User');
+		return new Response(var_dump($parametersAsArray));
 	}
+	
 	
 	/**
 	 * @Route("/post/{id}", name="update", methods="PUT")
