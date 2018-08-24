@@ -24,28 +24,29 @@ class GitHub_Users_Widget extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		echo $args['before_widget']; // What ever you want to display before widget(<div> etc..)
+		// What ever you want to display before widget(<div> etc..)
+		echo $args['before_widget'];
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
 		
-		$response = wp_remote_get('https://api.github.com/users/rhigleyfs/repos');
+		$response = wp_remote_get("https://api.github.com/users/".$instance['username']."/repos");
 		$repos = json_decode($response['body'], true);
 		
 		// Widget content output
-		echo 'Hello from GitHub Users widget!';
+		echo "<b><i>{$instance['username']}'s Repos!</i></b>";
 		echo '<br>';
 		foreach ($repos as $repo){
 			echo '<br>';
-			echo $repo["full_name"];
-			echo $repo["html_url"];
-			echo '<br>';
+			echo "<div>
+					<a href='{$repo["html_url"]}' target='_blank'>
+						{$repo['full_name']}
+					</a>
+				</div>";
 		}
 		
-		
-		
-		
-		echo $args['after_widget']; //  What ever you want to display after the widget (</div> etc..)
+		//  What ever you want to display after the widget (</div> etc..)
+		echo $args['after_widget'];
 	}
 	
 	/**
@@ -57,7 +58,12 @@ class GitHub_Users_Widget extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'GitHub Users', 'ghu_domain' );
+		
+		$username = ! empty( $instance['username'] ) ? $instance['username'] : esc_html__( 'TraceLarson', 'ghu_domain' );
+		
 		?>
+		
+		
 		<!--TITLE-->
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>">
@@ -68,6 +74,19 @@ class GitHub_Users_Widget extends WP_Widget {
 			       name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>"
 			       type="text"
 			       value="<?php echo esc_attr( $title ); ?>"
+			>
+		</p>
+		
+		<!--USERNAME-->
+		<p>
+			<label for="<?php echo esc_attr( $this->get_field_id( 'username' ) ); ?>">
+				<?php esc_attr_e( 'Username:', 'ghu_domain' ); ?>
+			</label>
+			<input class="widefat"
+			       id="<?php echo esc_attr( $this->get_field_id( 'username' ) ); ?>"
+			       name="<?php echo esc_attr( $this->get_field_name( 'username' ) ); ?>"
+			       type="text"
+			       value="<?php echo esc_attr( $username ); ?>"
 			>
 		</p>
 		<?php
@@ -85,7 +104,10 @@ class GitHub_Users_Widget extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
+		
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
+		
+		$instance['username'] = ( ! empty( $new_instance['username'] ) ) ? sanitize_text_field( $new_instance['username'] ) : '';
 		
 		return $instance;
 	}
