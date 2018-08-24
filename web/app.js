@@ -42,7 +42,14 @@ app.use(expressValidator({
 
 // Routes
 const index = require('./routes/index');
+const feed = require('./routes/feed');
+const post = require('./routes/post');
+const user = require('./routes/user');
 app.use('/', index);
+app.use('/feed', feed);
+app.use('/post', post);
+app.use('/user', user);
+
 
 
 module.exports = app;

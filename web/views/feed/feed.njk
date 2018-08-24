@@ -1,0 +1,27 @@
+{% extends "../base.njk" %}
+
+{% block title %}
+    <title>Chirp Feed</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Chirp Feed!</h1>
+    <div>
+        <ul class="list-group">
+            {% for post in feed %}
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item"><h3>{{ post.users.username }}</h3></li>
+                        <li class="list-group-item"><p>{{ post.Text }}</p></li>
+                        <li class="list-group-item">
+                            <p>{{ post.likes }}</p>
+                            <strong>like</strong> <a type="button" href="/post/:{{ post.id }}" class="btn btn-primary btn-sm" >+</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+

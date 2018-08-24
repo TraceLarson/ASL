@@ -32,7 +32,7 @@ class DefaultController extends AbstractController
 	    $normalizers = array($normalizer);
 	    $serializer = new Serializer($normalizers, $encoders);
     	
-	    // Get posts from database and serialize them into a response object
+	    // Get post from database and serialize them into a response object
 	    $posts = $this->getDoctrine()->getRepository(Post::class)->findAll();
 	    $response = new Response($serializer->serialize($posts, 'json'));
 	    
