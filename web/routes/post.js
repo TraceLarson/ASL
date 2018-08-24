@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const axios = require('axios');
 
 
 router.get('/', (req, res, next) => {
@@ -12,7 +13,17 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-	res.redirect('/feed');
+	axios.put('http://localhost:8000/post/' + req.params.id)
+		.then(response => {
+			response ?
+				console.log('success', response)
+				:
+				console.log('no response');
+			res.redirect('/feed');
+		})
+		.catch(error => {
+			console.log('error updating likes', error);
+		})
 });
 
 module.exports = router;
