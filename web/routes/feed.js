@@ -35,10 +35,32 @@ router.get('/', (req, res, next) => {
 
 
 // Show all posts from single user
-router.get('/{userID}', (req, res, next) => {
-	res.render(path.join(__dirname, '/../views/feed/userFeed'), {
-		page_name: 'feed'
-	})
+router.get('/:userId', (req, res, next) => {
+
+	axios.get('http://localhost:8000/feed/' + req.params.userId)
+		.then((response) => {
+			response ?
+				console.log('Success')
+				:
+				console.log('response from server was null');
+			let feed = [];
+			response = response.data;
+			response.map(object => {
+				feed.push(object);
+			});
+
+			// Render page with news feed
+			res.render(path.join(__dirname, '/../views/feed/userFeed'), {
+				page_name: 'feed',
+				feed: feed
+			})
+		})
+		.catch(error => {
+			console.log('Error getting feed: ', error);
+		})
+
+
+
 })
 
 module.exports = router;

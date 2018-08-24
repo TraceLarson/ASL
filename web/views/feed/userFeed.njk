@@ -6,6 +6,24 @@
 
 {% block body %}
     <h1>User Feed!</h1>
+    <div>
+        <ul class="list-group">
+            {% for post in feed %}
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="d-none" id="post-id">{{ post.id }}</li>
+                        <li class="list-group-item"><h3>{{ post.users.Username }}</h3></li>
+                        <li class="list-group-item"><p>{{ post.Text }}</p></li>
+                        <li class="list-group-item">
+                            <p>{{ post.likes }}</p>
+                            <strong>like</strong> <a type="button" href="/post/{{ post.id }}" class="btn btn-primary btn-sm" >+</a>
+                        </li>
+                        <li class="d-flex flex-row-reverse"><a class="btn btn-danger btn-sm" id="delete-btn">Delete Post</a></li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}
 
 

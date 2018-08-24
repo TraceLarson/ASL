@@ -11,7 +11,7 @@
             {% for post in feed %}
                 <li class="list-group-item">
                     <ul class="list-group">
-                        <li class="list-group-item"><h3>{{ post.users.username }}</h3></li>
+                        <li class="list-group-item"><h3><a href="/feed/{{ post.users.id }}">{{ post.users.username }}</a></h3></li>
                         <li class="list-group-item"><p>{{ post.Text }}</p></li>
                         <li class="list-group-item">
                             <p>{{ post.likes }}</p>
